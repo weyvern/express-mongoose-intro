@@ -37,3 +37,13 @@ export const createNewStudent = async (req, res) => {
 
 export const updateStudent = async (req, res) => {};
 export const removeStudent = async (req, res) => {};
+
+export const sanitizeTest = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const student = await Student.find({ email, password });
+    student.length > 0 ? res.send('Logged in') : res.sendStatus(401);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
